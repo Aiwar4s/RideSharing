@@ -7,6 +7,7 @@ namespace webapi.Data
     {
         private readonly IConfiguration _configuration;
         public DbSet<User> Users { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public TripDbContext(IConfiguration configuration)

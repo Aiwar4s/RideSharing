@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace webapi.Data.Entities
+﻿namespace webapi.Data.Entities
 {
     public class User
     {
