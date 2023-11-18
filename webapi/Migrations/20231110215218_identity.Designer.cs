@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using webapi.Data;
 
@@ -10,9 +11,11 @@ using webapi.Data;
 namespace webapi.Migrations
 {
     [DbContext(typeof(TripDbContext))]
-    partial class TripDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231110215218_identity")]
+    partial class identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

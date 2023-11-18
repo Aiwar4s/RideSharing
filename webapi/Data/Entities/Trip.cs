@@ -1,4 +1,6 @@
-﻿using webapi.Data;
+﻿using System.ComponentModel.DataAnnotations;
+using webapi.Auth.Entities;
+using webapi.Data;
 
 namespace webapi.Data.Entities
 {
@@ -11,6 +13,9 @@ namespace webapi.Data.Entities
         public required int Seats {  get; set; }
         public string? Description { get; set; }
         public required Driver Driver { get; set; }
+        [Required]
+        public required string UserId { get; set; }
+        public User User { get; set; }
     }
 }
 

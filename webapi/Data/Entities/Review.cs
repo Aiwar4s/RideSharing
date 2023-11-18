@@ -1,4 +1,6 @@
-﻿using webapi.Data;
+﻿using System.ComponentModel.DataAnnotations;
+using webapi.Auth.Entities;
+using webapi.Data;
 using webapi.Data.Entities;
 
 namespace webapi.Data.Entities
@@ -8,12 +10,14 @@ namespace webapi.Data.Entities
         public int Id { get; set; }
         public required int Rating { get; set; }
         public string? Description { get; set; }
-        public required int ReviewerId { get; set; }
         public required Trip Trip { get; set; }
+        [Required]
+        public required string UserId { get; set; }
+        public User User { get; set; }
     }
 }
 
 public record GetReviewParameters(int driverId, int tripId, int reviewId, TripDbContext dbContext);
-public record ReviewDto(int Id, int Rating, string? Description, int ReviewerId);
-public record CreateReviewDto(int Rating, string? Description, int ReviewerId);
+public record ReviewDto(int Id, int Rating, string? Description, string ReviewerId);
+public record CreateReviewDto(int Rating, string? Description, string ReviewerId);
 public record UpdateReviewDto(int Rating, string? Description);

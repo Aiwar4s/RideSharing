@@ -1,12 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using webapi.Auth.Entities;
 using webapi.Data.Entities;
 
 namespace webapi.Data
 {
-    public class TripDbContext:DbContext
+    public class TripDbContext:IdentityDbContext<User>
     {
         private readonly IConfiguration _configuration;
-        public DbSet<User> Users { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Trip> Trips { get; set; }
         public DbSet<Review> Reviews { get; set; }
