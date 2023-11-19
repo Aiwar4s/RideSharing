@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -45,6 +46,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 using var scope=app.Services.CreateScope();
+var dbContext=scope.ServiceProvider.GetRequiredService<TripDbContext>();
+dbContext.Database.Migrate();
+
 var dbSeeder = scope.ServiceProvider.GetRequiredService<AuthDbSeeder>();
 await dbSeeder.SeedAsync();
 
