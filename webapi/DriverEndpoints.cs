@@ -38,7 +38,7 @@ namespace webapi
                     previousPageLink, nextPageLink);
 
                 httpContext.Response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationMetadata));
-                return pagedList.Select(driver => new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber, driver.IsVerified));
+                return pagedList.Select(driver => new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber));
             }).WithName("GetDrivers");
             driversGroup.MapGet("drivers/{driverId}", async (int driverId, TripDbContext dbContext) =>
             {
@@ -47,7 +47,7 @@ namespace webapi
                 {
                     return Results.NotFound();
                 }
-                return Results.Ok(new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber, driver.IsVerified));
+                return Results.Ok(new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber));
             }).WithName("GetDriver");
             driversGroup.MapPost("drivers", [Authorize(Roles = UserRoles.Admin)] async ([Validate] CreateDriverDto createDriverDto, HttpContext httpContext, LinkGenerator linkGenerator, TripDbContext dbContext, UserManager<User> userManager) =>
             {
@@ -61,14 +61,13 @@ namespace webapi
                     Name = createDriverDto.Name,
                     Email = createDriverDto.Email,
                     PhoneNumber = createDriverDto.PhoneNumber,
-                    IsVerified = false,
                     UserId=createDriverDto.UserId,
                 };
                 dbContext.Drivers.Add(driver);
                 await dbContext.SaveChangesAsync();
 
                 var links = CreateLinks(driver.Id, httpContext, linkGenerator);
-                var driverDto = new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber, driver.IsVerified);
+                var driverDto = new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber);
                 var resource = new ResourceDto<DriverDto>(driverDto, links.ToArray());
 
                 await userManager.AddToRoleAsync(user, UserRoles.Driver);
@@ -89,10 +88,9 @@ namespace webapi
                 }
                 driver.Email = dto.Email;
                 driver.PhoneNumber = dto.PhoneNumber;
-                driver.IsVerified = dto.IsVerified;
                 dbContext.Update(driver);
                 await dbContext.SaveChangesAsync();
-                return Results.Ok(new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber, driver.IsVerified));
+                return Results.Ok(new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber));
             }).WithName("EditDriver");
             driversGroup.MapDelete("drivers/{driverId}", [Authorize(Roles = UserRoles.Driver)] async (int driverId, TripDbContext dbContext, HttpContext httpContext) =>
             {
