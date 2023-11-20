@@ -54,8 +54,7 @@ namespace webapi
             reviewsGroup.MapPost("reviews", [Authorize(Roles = UserRoles.BasicUser)] async ([Validate] CreateReviewDto createReviewDto, int driverId, int tripId, HttpContext httpContext, LinkGenerator linkGenerator, TripDbContext dbContext) =>
             {
                 var trip = await dbContext.Trips.FirstOrDefaultAsync(t => t.Id == tripId && t.Driver.Id == driverId);
-                var reviewer = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == createReviewDto.ReviewerId);
-                if (trip == null || reviewer == null)
+                if (trip == null)
                 {
                     return Results.NotFound();
                 }

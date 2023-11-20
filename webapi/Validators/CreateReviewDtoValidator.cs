@@ -7,7 +7,6 @@ namespace webapi.Validators
         public CreateReviewDtoValidator()
         {
             RuleFor(dto=>dto.Rating).NotEmpty().NotNull().InclusiveBetween(1, 5);
-            RuleFor(dto=>dto.ReviewerId).NotEmpty().NotNull();
         }
     }
 }
