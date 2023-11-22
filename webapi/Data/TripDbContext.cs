@@ -17,7 +17,7 @@ namespace webapi.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(_configuration.GetValue<string>("MySQLConnectionString"));
+            optionsBuilder.UseMySQL(_configuration.GetConnectionString("MySQL"));
         }
     }
 }

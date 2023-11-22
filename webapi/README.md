@@ -1,6 +1,6 @@
-# API specifikacija
+# API specification
 
-| GetUsers | /users |
+| GetDrivers | /drivers |
 | ----------- | ----------- |
 | Response codes | 200 - Ok |
 | Method | GET |
@@ -9,7 +9,7 @@
 
 ### Example request:
 ```
-GET /users
+GET /drivers
 ```
 ### Example response:
 ```
@@ -36,16 +36,16 @@ GET /users
 ```
 
 ---
-| GetUser | /users/{userId} |
+| GetDriver | /drivers/{driverId} |
 | ----------- | ----------- |
 | Response codes | 200 - Ok, 404 - Not Found |
 | Method | GET |
-| Parameters | userId |
+| Parameters | driverId |
 | Response | Json |
 
 ### Example request:
 ```
-GET /users/10
+GET /drivers/10
 ```
 ### Example response:
 ```
@@ -58,7 +58,7 @@ GET /users/10
 ```
 
 ---
-| CreateUser | /users |
+| CreateDriver | /drivers |
 | ----------- | ----------- |
 | Response codes | 201 - Created |
 | Method | POST |
@@ -67,7 +67,7 @@ GET /users/10
 
 ### Example request:
 ```
-POST /users
+POST /drivers
 
 Body:
 {
@@ -88,16 +88,16 @@ Body:
 ```
 
 ---
-| UpdateUser | /users/{userId} |
+| UpdateDriver | /drivers/{driverId} |
 | ----------- | ----------- |
 | Response codes | 200 - Ok, 404 - Not Found |
 | Method | PUT |
-| Parameters | userId |
+| Parameters | driverId |
 | Response | Json |
 
 ### Example request:
 ```
-PUT /users/20
+PUT /drivers/20
 
 Body:
 {
@@ -116,28 +116,28 @@ Body:
 }
 ```
 ---
-| DeleteUser | /users/{userId} |
+| DeleteDriver | /drivers/{driverId} |
 | ----------- | ----------- |
 | Response codes | 204 - No Content, 404 - Not Found |
 | Method | DELETE |
-| Parameters | userId |
+| Parameters | driverId |
 | Response | Json |
 
 ### Example request:
 ```
-DELETE /users/20
+DELETE /drivers/20
 ```
 ---
-| GetTrips | /users/{userId}/trips |
+| GetTrips | /drivers/{driverId}/trips |
 | ----------- | ----------- |
 | Response codes | 200 - Ok |
 | Method | GET |
-| Parameters | userId |
+| Parameters | driverId |
 | Response | Json |
 
 ### Example request:
 ```
-GET /users/10/trips
+GET /drivers/10/trips
 ```
 ### Example response:
 ```
@@ -170,16 +170,16 @@ GET /users/10/trips
 ```
 
 ---
-| GetTrip | /users/{userId}/trips/{tripId} |
+| GetTrip | /drivers/{driverId}/trips/{tripId} |
 | ----------- | ----------- |
 | Response codes | 200 - Ok, 404 - Not Found |
 | Method | GET |
-| Parameters | userId, tripId |
+| Parameters | driverId, tripId |
 | Response | Json |
 
 ### Example request:
 ```
-GET /users/10/trips/10
+GET /drivers/10/trips/10
 ```
 ### Example response:
 ```
@@ -194,16 +194,16 @@ GET /users/10/trips/10
 ```
 
 ---
-| CreateTrip | /users/{userId}/trips |
+| CreateTrip | /drivers/{driverId}/trips |
 | ----------- | ----------- |
 | Response codes | 201 - Created |
 | Method | POST |
-| Parameters | userId |
+| Parameters | driverId |
 | Response | Json |
 
 ### Example request:
 ```
-POST /users/10/trips
+POST /drivers/10/trips
 
 Body:
 {
@@ -227,16 +227,16 @@ Body:
 ```
 
 ---
-| UpdateTrip | /users/{userId}/trips/{tripId} |
+| UpdateTrip | /drivers/{driverId}/trips/{tripId} |
 | ----------- | ----------- |
 | Response codes | 200 - Ok, 404 - Not Found |
 | Method | PUT |
-| Parameters | userId, tripId |
+| Parameters | driverId, tripId |
 | Response | Json |
 
 ### Example request:
 ```
-PUT /users/10/trips/15
+PUT /drivers/10/trips/15
 
 Body:
 {
@@ -257,29 +257,29 @@ Body:
 }
 ```
 ---
-| DeleteTrip | /users/{userId}/trips/{tripId} |
+| DeleteTrip | /drivers/{driverId}/trips/{tripId} |
 | ----------- | ----------- |
 | Response codes | 204 - No Content, 404 - Not Found |
 | Method | DELETE |
-| Parameters | userId, tripId |
+| Parameters | driverId, tripId |
 | Response | Json |
 
 ### Example request:
 ```
-DELETE /users/10/trips/15
+DELETE /drivers/10/trips/15
 ```
 
 ---
-| GetReviews | /users/{userId}/trips/{tripId}/reviews |
+| GetReviews | /drivers/{driverId}/trips/{tripId}/reviews |
 | ----------- | ----------- |
 | Response codes | 200 - Ok |
 | Method | GET |
-| Parameters | userId, tripId |
+| Parameters | driverId, tripId |
 | Response | Json |
 
 ### Example request:
 ```
-GET /users/10/trips/12/reviews
+GET /drivers/10/trips/12/reviews
 ```
 ### Example response:
 ```
@@ -312,16 +312,16 @@ GET /users/10/trips/12/reviews
 ```
 
 ---
-| GetReview | /users/{userId}/trips/{tripId}/reviews/{reviewId} |
+| GetReview | /drivers/{driverId}/trips/{tripId}/reviews/{reviewId} |
 | ----------- | ----------- |
 | Response codes | 200 - Ok, 404 - Not Found |
 | Method | GET |
-| Parameters | userId, tripId, reviewId |
+| Parameters | driverId, tripId, reviewId |
 | Response | Json |
 
 ### Example request:
 ```
-GET /users/10/trips/12/reviews/13
+GET /drivers/10/trips/12/reviews/13
 ```
 ### Example response:
 ```
@@ -334,16 +334,16 @@ GET /users/10/trips/12/reviews/13
 ```
 
 ---
-| CreateReview | /users/{userId}/trips/{tripId}/reviews |
+| CreateReview | /drivers/{driverId}/trips/{tripId}/reviews |
 | ----------- | ----------- |
 | Response codes | 201 - Created |
 | Method | POST |
-| Parameters | userId, tripId |
+| Parameters | driverId, tripId |
 | Response | Json |
 
 ### Example request:
 ```
-POST /users/10/trips/12/reviews
+POST /drivers/10/trips/12/reviews
 
 Body:
 {
@@ -363,16 +363,16 @@ Body:
 ```
 
 ---
-| UpdateTrip | /users/{userId}/trips/{tripId}/reviews/{reviewId} |
+| UpdateTrip | /drivers/{driverId}/trips/{tripId}/reviews/{reviewId} |
 | ----------- | ----------- |
 | Response codes | 200 - Ok, 404 - Not Found |
 | Method | PUT |
-| Parameters | userId, tripId, reviewId |
+| Parameters | driverId, tripId, reviewId |
 | Response | Json |
 
 ### Example request:
 ```
-PUT /users/10/trips/12/reviews/17
+PUT /drivers/10/trips/12/reviews/17
 
 Body:
 {
@@ -390,14 +390,14 @@ Body:
 }
 ```
 ---
-| DeleteReview | /users/{userId}/trips/{tripId}/reviews/{reviewId} |
+| DeleteReview | /drivers/{driverId}/trips/{tripId}/reviews/{reviewId} |
 | ----------- | ----------- |
 | Response codes | 204 - No Content, 404 - Not Found |
 | Method | DELETE |
-| Parameters | userId, tripId, reviewId |
+| Parameters | driverId, tripId, reviewId |
 | Response | Json |
 
 ### Example request:
 ```
-DELETE /users/10/trips/12/reviews/17
+DELETE /drivers/10/trips/12/reviews/17
 ```

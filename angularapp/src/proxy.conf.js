@@ -1,9 +1,9 @@
 const PROXY_CONFIG = [
   {
     context: [
-      "/weatherforecast",
+      "/api/drivers",
     ],
-    target: "https://localhost:7040",
+    target: "https://dolphin-app-j6hoh.ondigitalocean.app/",
     secure: false
   }
 ]
