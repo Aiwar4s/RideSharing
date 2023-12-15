@@ -1,0 +1,14 @@
+<div>
+  <h1>Hi Welcome Back</h1>
+    <h3>Login Here</h3>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div>
+      <label for="userName">Username</label>
+      <input formControlName="userName" required type="text">
+      <label for="password">Password</label>
+      <input formControlName="password" type="password">
+    </div>
+    <button type="submit">Login</button>
+    <span>Don't have an account?<a routerLink="/signUp">Sign Up</a></span>
+  </form>
+</div>

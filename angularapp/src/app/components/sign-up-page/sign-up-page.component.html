@@ -1,0 +1,16 @@
+<div>
+  <h1>Hello Welcome</h1>
+  <h3>Create An Account</h3>
+  <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+    <div>
+      <label for="email">Email</label>
+      <input formControlName="email" type="email" required />
+      <label for="userName">Username</label>
+      <input formControlName="userName" type="text" required />
+      <label for="password">Password</label>
+      <input formControlName="password" type="password" required />
+    </div>
+    <button type="submit">Submit</button>
+    <span>Already have an account? <a href="/login">Login</a></span>
+  </form>
+</div>

@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://dolphin-app-j6hoh.ondigitalocean.app",
+    "secure": false
+  }
+}

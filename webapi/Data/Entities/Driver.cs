@@ -11,7 +11,7 @@ namespace webapi.Data.Entities
         public required string PhoneNumber { get; set; }
         [Required]
         public required string UserId {  get; set; }
-        public User User { get; set; }
+        public required User User { get; set; }
     }
 }
 
