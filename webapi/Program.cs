@@ -52,7 +52,7 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-
+app.UseRouting();
 
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
