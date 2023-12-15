@@ -62,6 +62,7 @@ namespace webapi
                     Email = createDriverDto.Email,
                     PhoneNumber = createDriverDto.PhoneNumber,
                     UserId=createDriverDto.UserId,
+                    User=user
                 };
                 dbContext.Drivers.Add(driver);
                 await dbContext.SaveChangesAsync();
