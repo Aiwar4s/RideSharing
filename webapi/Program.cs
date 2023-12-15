@@ -35,14 +35,8 @@ builder.Services.AddAuthentication(options =>
 });
 builder.Services.AddAuthorization();
 
-var app = builder.Build();
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-app.AddDriverApi();
-app.AddTripApi();
-app.AddReviewApi();
-app.AddAuthApi();
-
-var MyAllowSpecificOrigins="_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
@@ -52,6 +46,15 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
+
+var app = builder.Build();
+
+app.AddDriverApi();
+app.AddTripApi();
+app.AddReviewApi();
+app.AddAuthApi();
+
+
 app.UseRouting();
 
 app.UseCors(MyAllowSpecificOrigins);
