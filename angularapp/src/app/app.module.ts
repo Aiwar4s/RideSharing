@@ -15,6 +15,7 @@ import { DriverListComponent } from './components/drivers/driver-list/driver-lis
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from "@angular/material/icon";
 import { ViewDriverComponent } from './components/drivers/view-driver/view-driver.component';
+import { ViewTripComponent } from './components/trips/view-trip/view-trip.component';
 
 const routes: Routes = [
   {path:"", redirectTo:"app", pathMatch:"full"},
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path:"signup", component:SignUpPageComponent},
   {path:"home", component:HomeComponent, canActivate: [AuthGuard]},
   {path:"drivers", component:DriverListComponent, canActivate: [AuthGuard]},
-  {path:"viewDriver/:id", component:ViewDriverComponent, canActivate: [AuthGuard]}
+  {path:"viewDriver/:id", component:ViewDriverComponent, canActivate: [AuthGuard]},
+  {path:"viewTrip/:driverId/:id", component:ViewTripComponent, canActivate: [AuthGuard]}
   ];
 
 export function tokenGetter() {
@@ -37,6 +39,7 @@ export function tokenGetter() {
     HomeComponent,
     DriverListComponent,
     ViewDriverComponent,
+    ViewTripComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, RouterModule.forRoot(routes), ReactiveFormsModule, JwtModule.forRoot({

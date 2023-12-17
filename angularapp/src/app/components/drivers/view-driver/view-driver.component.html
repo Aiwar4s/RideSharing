@@ -5,7 +5,8 @@
   <hr>
   <div *ngIf="trips?.length!=0; else noTrips">
     <h3>Trips:</h3>
-    <table>
+    <table class="table">
+      <thead>
       <tr>
         <th>ID</th>
         <th>Departure</th>
@@ -13,12 +14,14 @@
         <th>Time</th>
         <th>Seats</th>
       </tr>
+      </thead>
       <tr *ngFor="let trip of trips">
         <td>{{trip.id}}</td>
         <td>{{trip.departure}}</td>
         <td>{{trip.destination}}</td>
         <td>{{trip.time}}</td>
         <td>{{trip.seats}}</td>
+        <td><button class="btn btn-primary" (click)="viewTrip(trip.id)">View</button></td>
       </tr>
     </table>
   </div>

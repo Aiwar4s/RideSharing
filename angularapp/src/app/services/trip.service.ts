@@ -12,4 +12,7 @@ export class TripService {
   getTrips(driverId:number){
     return this.httpClient.get<Trip[]>(`${this.api}drivers/${driverId}/trips`)
   }
+  getTrip(driverId:number,tripId:number){
+    return this.httpClient.get<Trip>(`${this.api}drivers/${driverId}/trips/${tripId}`)
+  }
 }

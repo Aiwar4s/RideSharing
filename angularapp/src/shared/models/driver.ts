@@ -3,4 +3,5 @@ export interface Driver {
   name: string;
   email: string;
   phoneNumber: string;
+  userId: string;
 }

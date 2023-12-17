@@ -5,4 +5,5 @@ export interface Trip{
   time:Date;
   seats:number;
   description:string;
+  userId:string;
 }

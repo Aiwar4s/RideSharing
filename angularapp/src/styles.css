@@ -7,4 +7,15 @@ a{
 button{
   font-variant: small-caps;
 }
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+th{
+  border-top: none;
+}
+th, td{
+  text-align: center;
+  padding: 5px;
+}
 

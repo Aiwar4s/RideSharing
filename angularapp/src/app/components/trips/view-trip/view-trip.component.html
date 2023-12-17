@@ -1,0 +1,34 @@
+<div>
+  <h1>{{trip?.departure}} - {{trip?.destination}}</h1>
+  <h3>{{getDate()}} {{getTime()}}</h3>
+  <h3>Created by: <a class="nav-link link-primary px-0 me-3" (click)="viewDriver()">{{driver?.name}}</a></h3>
+  <h4>Number of seats: {{trip?.seats}}</h4>
+  <h4>Description:</h4>
+  <p class="lead">{{trip?.description}}</p>
+  <hr>
+  <div *ngIf="reviews?.length!=0; else noReviews">
+    <h3>Reviews:</h3>
+<!--    <table class="table">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>ID</th>-->
+<!--        <th>Departure</th>-->
+<!--        <th>Destination</th>-->
+<!--        <th>Time</th>-->
+<!--        <th>Seats</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tr *ngFor="let trip of trips">-->
+<!--        <td>{{trip.id}}</td>-->
+<!--        <td>{{trip.departure}}</td>-->
+<!--        <td>{{trip.destination}}</td>-->
+<!--        <td>{{trip.time}}</td>-->
+<!--        <td>{{trip.seats}}</td>-->
+<!--        <td><button class="btn btn-primary" (click)="viewTrip(trip.id)">View</button></td>-->
+<!--      </tr>-->
+<!--    </table>-->
+  </div>
+  <ng-template #noReviews>
+    <h3>Driver has no trips yet</h3>
+  </ng-template>
+</div>
