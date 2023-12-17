@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -20,7 +21,7 @@ namespace webapi
         {
             var reviewsGroup = app.MapGroup("/api/drivers/{driverId}/trips/{tripId}").WithValidationFilter();
 
-            reviewsGroup.MapGet("reviews", async ([AsParameters] SearchParameters searchParams, int driverId, int tripId, TripDbContext dbContext, LinkGenerator linkGenerator, HttpContext httpContext) =>
+            reviewsGroup.MapGet("reviews", async ([AsParameters] SearchParameters searchParams, int driverId, int tripId, TripDbContext dbContext, LinkGenerator linkGenerator, HttpContext httpContext, UserManager<User> userManager) =>
             {
                 var queryable = dbContext.Reviews.Where(r => r.Trip.Id == tripId && r.Trip.Driver.Id == driverId).AsQueryable().OrderBy(o => o.Id);
                 var pagedList = await PagedList<Review>.CreateAsync(queryable, searchParams.PageNumber!.Value, searchParams.PageSize!.Value);
@@ -37,10 +38,12 @@ namespace webapi
                     previousPageLink, nextPageLink);
 
                 httpContext.Response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationMetadata));
-                return pagedList.Select(review => new ReviewDto(review.Id, review.Rating, review.Description, review.UserId));
+                return pagedList.Select(async review => new ReviewDto(review.Id, review.Rating, review.Description
+                    , (await userManager.FindByIdAsync(review.UserId)).UserName
+                    , review.UserId));
             }).WithName("GetReviews");
 
-            reviewsGroup.MapGet("reviews/{reviewId}", async ([AsParameters] GetReviewParameters parameters) =>
+            reviewsGroup.MapGet("reviews/{reviewId}", async ([AsParameters] GetReviewParameters parameters, UserManager<User> userManager) =>
             {
                 var review = await parameters.dbContext.Reviews
                 .FirstOrDefaultAsync(r => r.Id == parameters.reviewId && r.Trip.Id == parameters.tripId && r.Trip.Driver.Id == parameters.driverId);
@@ -48,10 +51,11 @@ namespace webapi
                 {
                     return Results.NotFound();
                 }
-                return Results.Ok(new ReviewDto(review.Id, review.Rating, review.Description, review.UserId));
+                var user = await userManager.FindByIdAsync(review.UserId);
+                return Results.Ok(new ReviewDto(review.Id, review.Rating, review.Description, user.UserName, review.UserId));
             }).WithName("GetReview");
 
-            reviewsGroup.MapPost("reviews", [Authorize(Roles = UserRoles.BasicUser)] async ([Validate] CreateReviewDto createReviewDto, int driverId, int tripId, HttpContext httpContext, LinkGenerator linkGenerator, TripDbContext dbContext) =>
+            reviewsGroup.MapPost("reviews", [Authorize(Roles = UserRoles.BasicUser)] async ([Validate] CreateReviewDto createReviewDto, int driverId, int tripId, HttpContext httpContext, LinkGenerator linkGenerator, TripDbContext dbContext, UserManager<User> userManager) =>
             {
                 var trip = await dbContext.Trips.FirstOrDefaultAsync(t => t.Id == tripId && t.Driver.Id == driverId);
                 if (trip == null)
@@ -69,13 +73,14 @@ namespace webapi
                 await dbContext.SaveChangesAsync();
 
                 var links = CreateLinks(review.Id, httpContext, linkGenerator);
-                var reviewDto = new ReviewDto(review.Id, review.Rating, review.Description, review.UserId);
+                var user = await userManager.FindByIdAsync(review.UserId);
+                var reviewDto = new ReviewDto(review.Id, review.Rating, review.Description, user.UserName, review.UserId);
                 var resource = new ResourceDto<ReviewDto>(reviewDto, links.ToArray());
 
                 return Results.Created($"/api/drivers/{driverId}/trips/{tripId}/reviews/{review.Id}", resource);
             }).WithName("CreateReview");
 
-            reviewsGroup.MapPut("reviews/{reviewId}", [Authorize(Roles = UserRoles.BasicUser)] async ([AsParameters] GetReviewParameters parameters, [Validate] UpdateReviewDto dto, HttpContext httpContext) =>
+            reviewsGroup.MapPut("reviews/{reviewId}", [Authorize(Roles = UserRoles.BasicUser)] async ([AsParameters] GetReviewParameters parameters, [Validate] UpdateReviewDto dto, HttpContext httpContext, UserManager<User> userManager) =>
             {
                 var review = await parameters.dbContext.Reviews
                 .FirstOrDefaultAsync(r => r.Id == parameters.reviewId && r.Trip.Id == parameters.tripId && r.Trip.Driver.Id == parameters.driverId);
@@ -91,7 +96,8 @@ namespace webapi
                 review.Description = dto.Description;
                 parameters.dbContext.Update(review);
                 await parameters.dbContext.SaveChangesAsync();
-                return Results.Ok(new ReviewDto(review.Id, review.Rating, review.Description, review.UserId));
+                var user = await userManager.FindByIdAsync(review.UserId);
+                return Results.Ok(new ReviewDto(review.Id, review.Rating, review.Description, user.UserName, review.UserId));
             }).WithName("EditReview");
 
             reviewsGroup.MapDelete("reviews/{reviewId}", [Authorize(Roles = UserRoles.BasicUser)] async ([AsParameters] GetReviewParameters parameters, HttpContext httpContext) =>
