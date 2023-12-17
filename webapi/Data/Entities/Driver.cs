@@ -15,6 +15,6 @@ namespace webapi.Data.Entities
     }
 }
 
-public record DriverDto(int Id, string Name, string Email, string PhoneNumber);
+public record DriverDto(int Id, string Name, string Email, string PhoneNumber, string UserId);
 public record CreateDriverDto(string Name, string Email, string PhoneNumber, string UserId);
 public record UpdateDriverDto(string Email, string PhoneNumber);

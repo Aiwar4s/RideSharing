@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Driver } from 'src/shared/models/driver';
 import {Router} from "@angular/router";
+import {AuthService} from "./auth.service";
+import {UserService} from "./services/user.service";
 
 @Component({
   selector: 'app-root',
@@ -9,25 +11,25 @@ import {Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  drivers:Driver[]=[
-    // new Driver(1, 'James Man', 'email@email.com', '+37060000000', 'abc'),
-    // new Driver(2, 'James Man', 'email1@email.com', '+37060000001', 'abc')
-  ]
-
-  public forecasts?: WeatherForecast[];
-
-  constructor(http: HttpClient, private router: Router) {}
+  constructor(http: HttpClient, private router: Router, private authService:AuthService, public userService: UserService) {}
 
   title = 'angularapp';
 
+  home() {
+    this.router.navigate(['home']);
+  }
   login() {
     this.router.navigate(['login']);
   }
-}
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  register() {
+    this.router.navigate(['signup']);
+  }
+  logout() {
+    this.authService.logout()
+    this.router.navigate(['home'])
+    location.reload()
+  }
+  getRole(){
+    return this.userService.user.role
+  }
 }

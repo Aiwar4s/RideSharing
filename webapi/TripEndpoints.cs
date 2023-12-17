@@ -36,7 +36,7 @@ namespace webapi
                     previousPageLink, nextPageLink);
 
                 httpContext.Response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationMetadata));
-                return pagedList.Select(trip => new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description));
+                return pagedList.Select(trip => new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description, trip.UserId));
             }).WithName("GetTrips");
 
             tripsGroup.MapGet("trips/{tripId}", async ([AsParameters] GetTripParameters parameters) =>
@@ -46,7 +46,7 @@ namespace webapi
                 {
                     return Results.NotFound();
                 }
-                return Results.Ok(new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description));
+                return Results.Ok(new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description, trip.UserId));
             }).WithName("GetTrip");
 
             tripsGroup.MapPost("trips", [Authorize(Roles =UserRoles.Driver)] async ([Validate] CreateTripDto createTripDto, int driverId, HttpContext httpContext, LinkGenerator linkGenerator, TripDbContext dbContext) =>
@@ -64,13 +64,13 @@ namespace webapi
                     Seats = createTripDto.Seats,
                     Description = createTripDto.Description,
                     Driver = driver,
-                    UserId = httpContext.User.FindFirstValue(JwtRegisteredClaimNames.Sub)
+                    UserId = driver.UserId
                 };
                 dbContext.Trips.Add(trip);
                 await dbContext.SaveChangesAsync();
 
                 var links = CreateLinks(trip.Id, httpContext, linkGenerator);
-                var tripDto = new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description);
+                var tripDto = new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description, trip.UserId);
                 var resource = new ResourceDto<TripDto>(tripDto, links.ToArray());
 
                 return Results.Created($"/api/drivers/{driver.Id}/trips/{trip.Id}", resource);
@@ -94,7 +94,7 @@ namespace webapi
                 trip.Description = dto.Description;
                 parameters.dbContext.Update(trip);
                 await parameters.dbContext.SaveChangesAsync();
-                return Results.Ok(new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description));
+                return Results.Ok(new TripDto(trip.Id, trip.Departure, trip.Destination, trip.Time, trip.Seats, trip.Description, trip.UserId));
             }).WithName("EditTrip");
 
             tripsGroup.MapDelete("trips/{tripId}", [Authorize(Roles = UserRoles.Driver)] async ([AsParameters] GetTripParameters parameters, HttpContext httpContext) =>

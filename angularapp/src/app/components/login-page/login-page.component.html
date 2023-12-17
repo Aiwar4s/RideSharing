@@ -1,10 +1,10 @@
 <div>
   <h1>Hi Welcome Back</h1>
     <h3>Login Here</h3>
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div>
-      <label for="userName">Username</label>
-      <input formControlName="userName" required type="text">
+      <label for="username">Username</label>
+      <input formControlName="username" required type="text">
       <label for="password">Password</label>
       <input formControlName="password" type="password">
     </div>

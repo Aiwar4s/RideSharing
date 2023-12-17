@@ -20,6 +20,6 @@ namespace webapi.Data.Entities
 }
 
 public record GetTripParameters(int driverId, int tripId, TripDbContext dbContext);
-public record TripDto(int Id, string Departure, string Destination, DateTime Time, int Seats, string? Description);
+public record TripDto(int Id, string Departure, string Destination, DateTime Time, int Seats, string? Description, string UserId);
 public record CreateTripDto(string Departure, string Destination, DateTime Time, int Seats, string? Description);
 public record UpdateTripDto(DateTime Time, int Seats, string? Description);

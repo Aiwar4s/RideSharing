@@ -15,7 +15,7 @@ export class SignUpPageComponent {
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
       email: [''],
-      username: [''],
+      userName: [''],
       password: ['']
     });
   }

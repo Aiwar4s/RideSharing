@@ -4,12 +4,8 @@ table{
 }
 th{
   border-top: none;
-  border-bottom: 1px solid black;
 }
 th, td{
   text-align: center;
   padding: 5px;
-}
-tr:not(:last-child){
-  border-bottom: 1px solid black;
 }

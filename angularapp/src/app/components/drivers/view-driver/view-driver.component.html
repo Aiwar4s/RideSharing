@@ -1,1 +1,28 @@
-<p>view-driver works!</p>
+<div>
+  <h1>{{driver?.name}}</h1>
+  <h3>{{driver?.phoneNumber}}</h3>
+  <h3>{{driver?.email}}</h3>
+  <hr>
+  <div *ngIf="trips?.length!=0; else noTrips">
+    <h3>Trips:</h3>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Departure</th>
+        <th>Destination</th>
+        <th>Time</th>
+        <th>Seats</th>
+      </tr>
+      <tr *ngFor="let trip of trips">
+        <td>{{trip.id}}</td>
+        <td>{{trip.departure}}</td>
+        <td>{{trip.destination}}</td>
+        <td>{{trip.time}}</td>
+        <td>{{trip.seats}}</td>
+      </tr>
+    </table>
+  </div>
+  <ng-template #noTrips>
+    <h3>Driver has no trips yet</h3>
+  </ng-template>
+</div>

@@ -1,16 +1,16 @@
-﻿<div class="container">
-    <div *ngIf="drivers.length===0; else showDrivers">No drivers to display</div>
-    <ng-template #showDrivers>
-        <table class="drivers">
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-            </tr>
-            <tr *ngFor="let driver of drivers">
-                <td>{{driver.id}}</td>
-                <td>{{driver.name}}</td>
-            </tr>
-        </table>
+﻿<router-outlet></router-outlet>
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  <div class="collapse navbar-collapse">
+    <a class="nav-link px-1 me-3 text-white" (click)="home()"><mat-icon>home</mat-icon></a>
+  </div>
+  <div class="d-flex align-items-sm-end">
+    <div *ngIf="getRole()==0; then LoggedOut else LoggedIn"></div>
+    <ng-template #LoggedOut>
+      <a class="nav-link link-primary px-0 me-3" (click)="login()">Login</a>
+      <a class="nav-link link-primary px-0 me-3" (click)="register()">Register</a>
     </ng-template>
-  <router-outlet><button (click)="login()">Login</button></router-outlet>
-</div>
+    <ng-template #LoggedIn>
+      <a class="nav-link link-primary px-0 me-3" (click)="logout()">Log Out</a>
+    </ng-template>
+  </div>
+</nav>
