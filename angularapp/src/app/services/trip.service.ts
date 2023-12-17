@@ -10,7 +10,7 @@ export class TripService {
   private api= GlobalComponent.apiURL;
   constructor(private httpClient:HttpClient) { }
   getTrips(driverId:number){
-    return this.httpClient.get<Trip[]>(`${this.api}drivers/${driverId}/trips`)
+    return this.httpClient.get<any>(`${this.api}drivers/${driverId}/trips`)
   }
   getTrip(driverId:number,tripId:number){
     return this.httpClient.get<Trip>(`${this.api}drivers/${driverId}/trips/${tripId}`)

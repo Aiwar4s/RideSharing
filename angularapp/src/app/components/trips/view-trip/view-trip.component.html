@@ -8,25 +8,10 @@
   <hr>
   <div *ngIf="reviews?.length!=0; else noReviews">
     <h3>Reviews:</h3>
-<!--    <table class="table">-->
-<!--      <thead>-->
-<!--      <tr>-->
-<!--        <th>ID</th>-->
-<!--        <th>Departure</th>-->
-<!--        <th>Destination</th>-->
-<!--        <th>Time</th>-->
-<!--        <th>Seats</th>-->
-<!--      </tr>-->
-<!--      </thead>-->
-<!--      <tr *ngFor="let trip of trips">-->
-<!--        <td>{{trip.id}}</td>-->
-<!--        <td>{{trip.departure}}</td>-->
-<!--        <td>{{trip.destination}}</td>-->
-<!--        <td>{{trip.time}}</td>-->
-<!--        <td>{{trip.seats}}</td>-->
-<!--        <td><button class="btn btn-primary" (click)="viewTrip(trip.id)">View</button></td>-->
-<!--      </tr>-->
-<!--    </table>-->
+    <dl *ngFor="let review of reviews">
+      <dt>{{review.reviewer}} {{review.rating}}/5</dt>
+      <dd>{{review.description}}</dd>
+    </dl>
   </div>
   <ng-template #noReviews>
     <h3>Driver has no trips yet</h3>
