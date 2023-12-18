@@ -21,7 +21,7 @@ export class ViewTripComponent implements OnInit{
   reviews?: Review[];
   driverId?: number;
   id?: number;
-  constructor(private userService:UserService, private driverService:DriverService, private tripService:TripService, private reviewService:ReviewService, private router:Router, private route:ActivatedRoute) { }
+  constructor(public userService:UserService, private driverService:DriverService, private tripService:TripService, private reviewService:ReviewService, private router:Router, private route:ActivatedRoute) { }
   ngOnInit(): void {
     this.sub=this.route.params.subscribe(params=>{
       this.driverId=params['driverId'];
@@ -49,8 +49,17 @@ export class ViewTripComponent implements OnInit{
   deleteReview(){
     this.reviewService.deleteReview(this.driverId as number, this.id as number, this.getReview()?.id as number).subscribe()
   }
+  deleteReviewById(id:number){
+    this.reviewService.deleteReview(this.driverId as number, this.id as number, id).subscribe()
+  }
   hasReview(){
+    if(this.userService.user.id===this.trip?.userId){
+      return true;
+    }
     return this.reviews?.some(review=>review.reviewer===this.userService.user.username)
+  }
+  isOwner(){
+    return this.userService.user.id===this.trip?.userId
   }
   getReview(){
     return this.reviews?.find(review=>review.reviewer===this.userService.user.username)

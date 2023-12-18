@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Subscriber, Subscription} from "rxjs";
 import {Trip} from "../../../../shared/models/trip";
 import {TripService} from "../../../services/trip.service";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-view-driver',
@@ -16,7 +17,7 @@ export class ViewDriverComponent implements OnInit {
   driver?: Driver;
   trips?: Trip[];
   id?: number;
-  constructor(private driverService:DriverService, private tripService: TripService, private router:Router, private route:ActivatedRoute) { }
+  constructor(private driverService:DriverService, private tripService: TripService, private router:Router, private route:ActivatedRoute, public userService:UserService) { }
   ngOnInit(): void {
     this.sub=this.route.params.subscribe(params=>{
       this.id=params['id']
@@ -36,5 +37,13 @@ export class ViewDriverComponent implements OnInit {
   viewTrip(id:number){
     this.router.navigate(['viewTrip',this.driver?.id, id])
   }
-
+  isDriver(){
+    return this.driver?.userId===this.userService.user.id
+  }
+  editTrip(id:number){
+    this.router.navigate(['updateTrip',this.driver?.id, id])
+  }
+  deleteTrip(id:number){
+    this.tripService.deleteTrip(this.driver?.id as number, id).subscribe()
+  }
 }

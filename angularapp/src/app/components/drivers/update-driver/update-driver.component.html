@@ -1,0 +1,12 @@
+<div>
+  <h1>Update driver profile</h1>
+  <form method="post" [formGroup]="driverForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input formControlName="email" type="email" class="form-control" id="email" name="email" required [value]="driver?.email" [defaultValue]="driver?.email">
+      <label for="phoneNumber">Phone</label>
+      <input formControlName="phoneNumber" type="tel" class="form-control" id="phoneNumber" name="phoneNumber" required [value]="driver?.phoneNumber" [defaultValue]="driver?.phoneNumber">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

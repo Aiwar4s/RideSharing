@@ -21,7 +21,11 @@
         <td>{{trip.destination}}</td>
         <td>{{trip.time}}</td>
         <td>{{trip.seats}}</td>
-        <td><button class="btn btn-primary" (click)="viewTrip(trip.id)">View</button></td>
+        <td>
+          <button class="btn btn-primary" (click)="viewTrip(trip.id)">View</button>
+          <button *ngIf="isDriver()||userService.user.role===3" class="btn btn-primary" (click)="editTrip(trip.id)">Edit</button>
+          <button *ngIf="isDriver()||userService.user.role===3" class="btn btn-danger" (click)="deleteTrip(trip.id)">Delete</button>
+        </td>
       </tr>
     </table>
   </div>

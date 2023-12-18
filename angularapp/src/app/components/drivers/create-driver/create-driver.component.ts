@@ -28,7 +28,9 @@ export class CreateDriverComponent implements OnInit {
       phoneNumber: this.driverForm.value.phoneNumber,
       userId: this.userService.user.id
     }).subscribe()
-    this.auth.updateUser()
+    if(this.userService.user.role===1){
+      this.userService.user.role=2
+    }
     this.router.navigate(['home'])
   }
 }

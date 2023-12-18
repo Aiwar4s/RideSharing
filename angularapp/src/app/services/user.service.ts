@@ -1,13 +1,13 @@
 import { Injectable} from '@angular/core';
-import {User} from "../../shared/models/user";
-import {AuthService} from "../auth.service";
+import {User} from "../../shared/models/user";;
+import {DriverService} from "./driver.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService{
   public user: User = new User()
-  constructor() {
+  constructor(){
     try{
       this.setUser()
     }

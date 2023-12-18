@@ -19,16 +19,22 @@ import { ViewTripComponent } from './components/trips/view-trip/view-trip.compon
 import { CreateReviewComponent } from './components/reviews/create-review/create-review.component';
 import { EditReviewComponent } from './components/reviews/edit-review/edit-review.component';
 import { CreateDriverComponent } from './components/drivers/create-driver/create-driver.component';
+import { UpdateDriverComponent } from './components/drivers/update-driver/update-driver.component';
+import { AddTripComponent } from './components/trips/add-trip/add-trip.component';
+import { UpdateTripComponent } from './components/trips/update-trip/update-trip.component';
 
 const routes: Routes = [
   {path:"", redirectTo:"app", pathMatch:"full"},
   {path:"login", component:LoginPageComponent},
   {path:"signup", component:SignUpPageComponent},
-  {path:"home", component:HomeComponent, canActivate: [AuthGuard]},
+  {path:"home", component:DriverListComponent, canActivate: [AuthGuard]},
   {path:"drivers", component:DriverListComponent, canActivate: [AuthGuard]},
   {path:"createDriver", component:CreateDriverComponent, canActivate: [AuthGuard]},
+  {path:"updateDriver/:id", component:UpdateDriverComponent, canActivate: [AuthGuard]},
   {path:"viewDriver/:id", component:ViewDriverComponent, canActivate: [AuthGuard]},
   {path:"viewTrip/:driverId/:id", component:ViewTripComponent, canActivate: [AuthGuard]},
+  {path:"addTrip/:driverId", component:AddTripComponent, canActivate: [AuthGuard]},
+  {path:"updateTrip/:driverId/:tripId", component:UpdateTripComponent, canActivate: [AuthGuard]},
   {path:"createReview/:driverId/:tripId", component:CreateReviewComponent, canActivate: [AuthGuard]},
   {path:"editReview/:driverId/:tripId/:reviewId", component:EditReviewComponent, canActivate: [AuthGuard]},
   ];
@@ -49,6 +55,9 @@ export function tokenGetter() {
     CreateReviewComponent,
     EditReviewComponent,
     CreateDriverComponent,
+    UpdateDriverComponent,
+    AddTripComponent,
+    UpdateTripComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, RouterModule.forRoot(routes), ReactiveFormsModule, JwtModule.forRoot({

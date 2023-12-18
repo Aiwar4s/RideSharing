@@ -8,13 +8,13 @@
   <hr>
   <h3>Reviews: <button *ngIf="!hasReview(); else reviewCreated" class="btn btn-primary" (click)="createReview()">Add</button>
     <ng-template #reviewCreated>
-      <button class="btn btn-primary" (click)="editReview()">Edit</button>
-      <button class="btn btn-danger" (click)="deleteReview()">Delete</button>
+      <button *ngIf="!isOwner()" class="btn btn-primary" (click)="editReview()">Edit</button>
+      <button *ngIf="!isOwner()" class="btn btn-danger" (click)="deleteReview()">Delete</button>
     </ng-template>
   </h3>
   <div *ngIf="reviews?.length!=0; else noReviews">
     <dl *ngFor="let review of reviews">
-      <dt>{{review.reviewer}}: {{review.rating}}/5</dt>
+      <dt>{{review.reviewer}}: {{review.rating}}/5 <button *ngIf="userService.user.role===3" class="btn btn-danger" (click)="deleteReviewById(review.id)">Delete</button></dt>
       <dd>{{review.description}}</dd>
     </dl>
   </div>
