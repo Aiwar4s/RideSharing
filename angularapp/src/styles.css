@@ -1,5 +1,6 @@
 body{
   padding-top: 65px;
+  padding-left: 20px;
 }
 a{
   cursor: pointer;
@@ -17,5 +18,8 @@ th{
 th, td{
   text-align: center;
   padding: 5px;
+}
+div.form-group{
+  width: 50%;
 }
 

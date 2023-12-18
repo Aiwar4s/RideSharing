@@ -24,6 +24,9 @@ export class AppComponent {
   register() {
     this.router.navigate(['signup']);
   }
+  createDriver() {
+    this.router.navigate(['createDriver']);
+  }
   logout() {
     this.authService.logout()
     this.router.navigate(['home'])

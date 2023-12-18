@@ -6,14 +6,19 @@
   <h4>Description:</h4>
   <p class="lead">{{trip?.description}}</p>
   <hr>
+  <h3>Reviews: <button *ngIf="!hasReview(); else reviewCreated" class="btn btn-primary" (click)="createReview()">Add</button>
+    <ng-template #reviewCreated>
+      <button class="btn btn-primary" (click)="editReview()">Edit</button>
+      <button class="btn btn-danger" (click)="deleteReview()">Delete</button>
+    </ng-template>
+  </h3>
   <div *ngIf="reviews?.length!=0; else noReviews">
-    <h3>Reviews:</h3>
     <dl *ngFor="let review of reviews">
-      <dt>{{review.reviewer}} {{review.rating}}/5</dt>
+      <dt>{{review.reviewer}}: {{review.rating}}/5</dt>
       <dd>{{review.description}}</dd>
     </dl>
   </div>
   <ng-template #noReviews>
-    <h3>Driver has no trips yet</h3>
+    <h3>Trip has no reviews yet</h3>
   </ng-template>
 </div>

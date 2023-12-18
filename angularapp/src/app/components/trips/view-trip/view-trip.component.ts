@@ -7,6 +7,7 @@ import {Review} from "../../../../shared/models/review";
 import {ReviewService} from "../../../services/review.service";
 import {DriverService} from "../../../services/driver.service";
 import {Driver} from "../../../../shared/models/driver";
+import {UserService} from "../../../services/user.service";
 
 @Component({
   selector: 'app-view-trip',
@@ -20,7 +21,7 @@ export class ViewTripComponent implements OnInit{
   reviews?: Review[];
   driverId?: number;
   id?: number;
-  constructor(private driverService:DriverService, private tripService:TripService, private reviewService:ReviewService, private router:Router, private route:ActivatedRoute) { }
+  constructor(private userService:UserService, private driverService:DriverService, private tripService:TripService, private reviewService:ReviewService, private router:Router, private route:ActivatedRoute) { }
   ngOnInit(): void {
     this.sub=this.route.params.subscribe(params=>{
       this.driverId=params['driverId'];
@@ -38,5 +39,23 @@ export class ViewTripComponent implements OnInit{
   }
   getTime(){
     return this.trip?.time.toString().substring(11,16);
+  }
+  createReview(){
+    this.router.navigate(['createReview',this.driverId,this.id])
+  }
+  editReview(){
+    this.router.navigate(['editReview',this.driverId,this.id,this.getReview()?.id])
+  }
+  deleteReview(){
+    this.reviewService.deleteReview(this.driverId as number, this.id as number, this.getReview()?.id as number).subscribe()
+  }
+  hasReview(){
+    return this.reviews?.some(review=>review.reviewer===this.userService.user.username)
+  }
+  getReview(){
+    return this.reviews?.find(review=>review.reviewer===this.userService.user.username)
+  }
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 }

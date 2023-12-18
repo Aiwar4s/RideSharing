@@ -15,4 +15,7 @@ export class DriverService {
   getDriver(id:number){
     return this.httpClient.get<Driver>(`${this.api}/${id}`)
   }
+  createDriver(driver:any){
+    return this.httpClient.post<Driver>(this.api, driver)
+  }
 }

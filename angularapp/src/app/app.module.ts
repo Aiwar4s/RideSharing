@@ -16,6 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from "@angular/material/icon";
 import { ViewDriverComponent } from './components/drivers/view-driver/view-driver.component';
 import { ViewTripComponent } from './components/trips/view-trip/view-trip.component';
+import { CreateReviewComponent } from './components/reviews/create-review/create-review.component';
+import { EditReviewComponent } from './components/reviews/edit-review/edit-review.component';
+import { CreateDriverComponent } from './components/drivers/create-driver/create-driver.component';
 
 const routes: Routes = [
   {path:"", redirectTo:"app", pathMatch:"full"},
@@ -23,8 +26,11 @@ const routes: Routes = [
   {path:"signup", component:SignUpPageComponent},
   {path:"home", component:HomeComponent, canActivate: [AuthGuard]},
   {path:"drivers", component:DriverListComponent, canActivate: [AuthGuard]},
+  {path:"createDriver", component:CreateDriverComponent, canActivate: [AuthGuard]},
   {path:"viewDriver/:id", component:ViewDriverComponent, canActivate: [AuthGuard]},
-  {path:"viewTrip/:driverId/:id", component:ViewTripComponent, canActivate: [AuthGuard]}
+  {path:"viewTrip/:driverId/:id", component:ViewTripComponent, canActivate: [AuthGuard]},
+  {path:"createReview/:driverId/:tripId", component:CreateReviewComponent, canActivate: [AuthGuard]},
+  {path:"editReview/:driverId/:tripId/:reviewId", component:EditReviewComponent, canActivate: [AuthGuard]},
   ];
 
 export function tokenGetter() {
@@ -40,6 +46,9 @@ export function tokenGetter() {
     DriverListComponent,
     ViewDriverComponent,
     ViewTripComponent,
+    CreateReviewComponent,
+    EditReviewComponent,
+    CreateDriverComponent,
   ],
   imports: [
     BrowserModule, HttpClientModule, RouterModule.forRoot(routes), ReactiveFormsModule, JwtModule.forRoot({
