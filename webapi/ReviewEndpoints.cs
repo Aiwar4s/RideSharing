@@ -118,8 +118,8 @@ namespace webapi
 
         static async Task<ReviewDto> CreateReviewDto(ReviewDtoTemp review, UserManager<User> userManager)
         {
-            var username=(await userManager.FindByIdAsync(review.ReviewerId)).UserName;
-            return new ReviewDto(review.Id, review.Rating, review.Description, review.ReviewerId, username);
+            var user=await userManager.FindByIdAsync(review.ReviewerId);
+            return new ReviewDto(review.Id, review.Rating, review.Description, review.ReviewerId, user.UserName);
         }
         static IEnumerable<LinkDto> CreateLinks(int reviewId, HttpContext httpContext, LinkGenerator linkGenerator)
         {
