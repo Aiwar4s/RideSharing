@@ -38,7 +38,7 @@ namespace webapi
                     previousPageLink, nextPageLink);
 
                 httpContext.Response.Headers.Add("Pagination", JsonSerializer.Serialize(paginationMetadata));
-                return pagedList.Select(review => CreateReviewDto(new ReviewDtoTemp(review.Id, review.Rating, review.Description, review.UserId), userManager));
+                return pagedList.Select(async review => await CreateReviewDto(new ReviewDtoTemp(review.Id, review.Rating, review.Description, review.UserId), dbContext));
             }).WithName("GetReviews");
 
             reviewsGroup.MapGet("reviews/{reviewId}", async ([AsParameters] GetReviewParameters parameters, UserManager<User> userManager) =>
@@ -116,9 +116,9 @@ namespace webapi
             }).WithName("RemoveReview");
         }
 
-        static async Task<ReviewDto> CreateReviewDto(ReviewDtoTemp review, UserManager<User> userManager)
+        static async Task<ReviewDto> CreateReviewDto(ReviewDtoTemp review, TripDbContext dbContext)
         {
-            var user=await userManager.FindByIdAsync(review.ReviewerId);
+            var user=dbContext.Users.FirstOrDefault(u => u.Id == review.ReviewerId);
             return new ReviewDto(review.Id, review.Rating, review.Description, review.ReviewerId, user.UserName);
         }
         static IEnumerable<LinkDto> CreateLinks(int reviewId, HttpContext httpContext, LinkGenerator linkGenerator)
