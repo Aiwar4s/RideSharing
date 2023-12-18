@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../../../services/user.service";
 import {DriverService} from "../../../services/driver.service";
 import {Router} from "@angular/router";
+import {AuthService} from "../../../auth.service";
 
 @Component({
   selector: 'app-create-driver',
@@ -11,7 +12,7 @@ import {Router} from "@angular/router";
 })
 export class CreateDriverComponent implements OnInit {
   public driverForm!: FormGroup;
-  constructor(private formBuilder:FormBuilder, private userService:UserService, private driverService:DriverService, private router:Router) { }
+  constructor(private formBuilder:FormBuilder, private auth:AuthService, private userService:UserService, private driverService:DriverService, private router:Router) { }
   ngOnInit(): void {
     this.driverForm=this.formBuilder.group({
       firstName:['', Validators.required],
@@ -27,6 +28,7 @@ export class CreateDriverComponent implements OnInit {
       phoneNumber: this.driverForm.value.phoneNumber,
       userId: this.userService.user.id
     }).subscribe()
+    this.auth.updateUser()
     this.router.navigate(['home'])
   }
 }

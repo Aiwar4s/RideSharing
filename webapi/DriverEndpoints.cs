@@ -93,7 +93,7 @@ namespace webapi
                 await dbContext.SaveChangesAsync();
                 return Results.Ok(new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber, driver.UserId));
             }).WithName("EditDriver");
-            driversGroup.MapDelete("drivers/{driverId}", [Authorize(Roles = UserRoles.Driver)] async (int driverId, TripDbContext dbContext, HttpContext httpContext) =>
+            driversGroup.MapDelete("drivers/{driverId}", [Authorize(Roles = UserRoles.Driver)] async (int driverId, TripDbContext dbContext, HttpContext httpContext, UserManager<User> userManager) =>
             {
                 var driver = await dbContext.Drivers.FirstOrDefaultAsync(d => d.Id == driverId);
                 if (driver == null)
@@ -104,6 +104,8 @@ namespace webapi
                 {
                     return Results.Forbid();
                 }
+                var user = await userManager.FindByIdAsync(driver.UserId);
+                await userManager.RemoveFromRoleAsync(user, UserRoles.Driver);
                 var trips = await dbContext.Trips.Where(t => t.Driver.Id == driver.Id).ToListAsync();
                 foreach (Trip trip in trips)
                 {
@@ -114,6 +116,7 @@ namespace webapi
                     }
                     dbContext.Remove(trip);
                 }
+                
                 dbContext.Remove(driver);
                 await dbContext.SaveChangesAsync();
                 return Results.NoContent();

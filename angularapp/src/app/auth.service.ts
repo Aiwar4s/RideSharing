@@ -52,6 +52,10 @@ export class AuthService {
     }
     return !this.jwtHelper.isTokenExpired(token)
   }
+  updateUser(){
+    this.refresh(localStorage.getItem('refresh_token') as string)
+    this.userService.setUser()
+}
 
 }
 interface LoginResponse {
