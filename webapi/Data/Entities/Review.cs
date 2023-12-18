@@ -18,6 +18,7 @@ namespace webapi.Data.Entities
 }
 
 public record GetReviewParameters(int driverId, int tripId, int reviewId, TripDbContext dbContext);
-public record ReviewDto(int Id, int Rating, string? Description, string ReviewerId);
+public record ReviewDtoTemp(int Id, int Rating, string? Description, string ReviewerId);
+public record ReviewDto(int Id, int Rating, string? Description, string ReviewerId, string Reviewer);
 public record CreateReviewDto(int Rating, string? Description);
 public record UpdateReviewDto(int Rating, string? Description);
