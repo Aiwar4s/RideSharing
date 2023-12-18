@@ -49,7 +49,7 @@ namespace webapi
                 }
                 return Results.Ok(new DriverDto(driver.Id, driver.Name, driver.Email, driver.PhoneNumber, driver.UserId));
             }).WithName("GetDriver");
-            driversGroup.MapPost("drivers", [Authorize(Roles = UserRoles.Admin)] async ([Validate] CreateDriverDto createDriverDto, HttpContext httpContext, LinkGenerator linkGenerator, TripDbContext dbContext, UserManager<User> userManager) =>
+            driversGroup.MapPost("drivers", [Authorize(Roles = UserRoles.BasicUser)] async ([Validate] CreateDriverDto createDriverDto, HttpContext httpContext, LinkGenerator linkGenerator, TripDbContext dbContext, UserManager<User> userManager) =>
             {
                 var user = await userManager.FindByIdAsync(createDriverDto.UserId);
                 if (user == null)
